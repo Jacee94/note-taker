@@ -24,7 +24,19 @@ function createNewNote(body, noteArray){
     return note;
 }
 
+function overwriteDb(obj){
+    const note = obj;
+
+    fs.writeFileSync(
+        path.join(__dirname, '../db/db.json'),
+        JSON.stringify({ notes: obj}, null, 2)
+    );
+
+    return note;
+}
+
 module.exports = {
     validateNote,
-    createNewNote
+    createNewNote,
+    overwriteDb
 }

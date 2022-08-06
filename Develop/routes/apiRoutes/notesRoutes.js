@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { notes } = require('../../db/db');
 const { v4: uuidv4 } = require('uuid');
-const { validateNote, createNewNote } = require('../../lib/notes');
+const { validateNote, createNewNote, overwriteDb } = require('../../lib/notes');
+var { notes } = require('../../db/db');
 
 router.get('/notes', (req, res) => {
-    results = notes;
+    let results = notes;
     res.json(results);
 })
 
@@ -18,5 +18,13 @@ router.post('/notes', (req, res) => {
         res.json(note);
     }
 });
+
+router.delete('/notes/:id', (req, res) => {
+    let results = notes.filter(dat => dat.id !== req.params.id)
+
+    overwriteDb(results);
+    notes = results;
+    res.sendStatus(200);
+})
 
 module.exports = router;
