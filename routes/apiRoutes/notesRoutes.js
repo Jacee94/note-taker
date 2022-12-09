@@ -4,7 +4,7 @@ const { validateNote, createNewNote, overwriteDb } = require('../../lib/notes');
 var { notes } = require('../../db/db');
 
 router.get('/notes', (req, res) => {
-    let results = notes;
+    const results = notes;
     res.json(results);
 })
 
@@ -15,12 +15,12 @@ router.post('/notes', (req, res) => {
         res.status(400).send('The note is not formatted properly');
     } else {
         const note = createNewNote(req.body, notes);
-        res.json(note);
+        res.json(note); 
     }
 });
 
 router.delete('/notes/:id', (req, res) => {
-    let results = notes.filter(dat => dat.id !== req.params.id)
+    const results = notes.filter(dat => dat.id !== req.params.id)
 
     overwriteDb(results);
     notes = results;
